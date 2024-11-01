@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import apiURL from '../api'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddItems = ({setView, setItemChanged})=>{
     const [name, setName] = useState('')
@@ -35,6 +36,7 @@ const AddItems = ({setView, setItemChanged})=>{
                 body: JSON.stringify(formData)
             })
             const result = await response.json()
+            toast.success("Item Added To The Database")
             setItemChanged(result)
             setView('viewItem')
         } catch(error){
@@ -80,6 +82,7 @@ const AddItems = ({setView, setItemChanged})=>{
                     <button className="buttons" type="button" onClick={()=>{setView('viewItem')}}>Back</button>
                 </div>
             </form>
+            <ToastContainer/>
         </div>
     )
 }

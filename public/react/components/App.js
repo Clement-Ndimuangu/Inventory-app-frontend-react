@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { ItemsList } from './ItemsList';
 import "../../style.css"
 import img from '../../images/pngtree-vector-cart-icon-png-image_3876648.jpg'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // import and prepend the api url to any fetch calls
 import apiURL from '../api';
@@ -39,9 +41,6 @@ export const App = () => {
 			const res = await fetch(`${apiURL}/items/${itemId}`)
 			const data = await res.json()
 			setItem(data)
-			console.log('fetched single item');
-			console.log(data);
-			
 			
 		} catch (error) {
 			console.error("Ohh something went wrong fetching single item", error)
@@ -56,6 +55,7 @@ export const App = () => {
 			const data = await res.json()
 			if(data){
 				setItemChanged(data)
+				toast.warn("Item Deleted", {autoClose: 2000})
 			}
 		} catch (error) {
 			console.error("Sorry something went wrong when trying to delete the item", error);
@@ -63,7 +63,6 @@ export const App = () => {
 	}
 
 	const editItem = async(item)=>{
-		setView('updateItem')
 		const res = await fetch(`${apiURL}/items/${item.id}`,{
               method: "PUT",
               headers: {
@@ -71,6 +70,7 @@ export const App = () => {
               }, body: JSON.stringify(item)
              })
              const data = await res.json()
+			 toast.success("Item Updated Succesfully")
 			setView('viewItem')
 			setItemChanged(item)
 	}
@@ -89,16 +89,17 @@ export const App = () => {
 	return (
 		<main>	
 			<div className='heading'>
-			<h1 className='font'>Inventory Management App</h1>
-			<button onClick={()=> setView('cart')}><img id='cart' src={img}/></button>
+			<h1 className='font'>"Oro Jackson" Inventory Management App</h1>
+			<img id='cart' onClick={()=> setView('cart')} src={img}/>
 			</div>
 			{/* routing and rendering of the different components based on the view */}
 			{view == 'viewItem'? 
 			<div className='items'>
 				<ItemsList setView={setView} items={items} item={item} setItem={setItem} editItem={editItem} fetchSingleItem={fetchSingleItem} deleteItem={deleteItem} searchItem={searchItem} setSearchItem={setSearchItem} handleSearch={handleSearch}/>
+				<ToastContainer/>
 			</div> : view == 'addItem'?
 			 <AddItem setView={setView} setItemChanged={setItemChanged}/> :
-			 view == 'cart' ? <Cart /> :
+			 view == 'cart' ? <Cart setView={setView}/> :
 			 <UpdateItem 
 			 	item={item} 
 				editItem={editItem}		

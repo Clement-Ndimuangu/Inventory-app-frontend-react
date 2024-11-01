@@ -22,7 +22,7 @@ h1, h2, h3, h4, p, label{
 }
 
 .product:hover{
-  background-color: rgb(241, 232, 250);
+  background-color: rgba(40, 97, 97, 0.491);
 }
 
 .product{
@@ -124,7 +124,7 @@ input[type=number]{
   border: none;
 }
 .buttons:hover{
-  background-color: rgba(22, 71, 71, 0.491)
+  background-color: rgba(8, 4, 48, 0.491)
 }
 h1{
   background-color: rgba(22, 71, 71, 0.491);
@@ -156,10 +156,25 @@ h2{
 #cart{
   width: 80px;
   height: 80px;
+  margin-right: 2rem;
 }
 
 .heading{
-  /* display: flex; */
+  display: flex;
   justify-content: space-between;
   
+}
+
+.cart{
+  display: flex;
+  justify-content: center;
+}
+.cartItem{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 14rem;
+}
+.cartItem img{
+  height: 10rem;
 }
