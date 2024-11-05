@@ -23,10 +23,12 @@ export const App = () => {
 	async function fetchItems(){
 		try {
 			console.log(apiURL)
-			const response = await fetch(`${apiURL}/items`);
+			const response = await fetch(`${apiURL}/items`,{"Access-Control-Allow-Origin": "*"});
 			const itemsData = await response.json();
 			setItems(itemsData);
 			setItem(itemsData[0])
+			console.log(itemsData);
+			
 		} catch (err) {
 			console.log("Oh no an error! ", err)
 		}
